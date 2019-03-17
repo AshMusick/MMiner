@@ -38,6 +38,7 @@ namespace King {
 		float mMouseX;
 		float mMouseY;
 		bool mMouseButtonDown;
+		//bool mMouseButtonUp;
 		
 		EngineImplementation()
 			: mSdl(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_NOPARACHUTE)
@@ -47,6 +48,7 @@ namespace King {
 			, mMouseX(WindowWidth * 0.5f)
 			, mMouseY(WindowHeight * 0.5f)
 			, mMouseButtonDown(false)
+			//, mMouseButtonUp(false)
 			, mQuit(false)
 			, mUpdater(nullptr)
 			, mElapsedTicks(static_cast<float>(SDL_GetTicks()))
@@ -109,7 +111,11 @@ namespace King {
 	bool Engine::GetMouseButtonDown() const {
 		return mPimpl->mMouseButtonDown;
 	}
-	
+
+	//bool Engine::GetMouseButtonUp() const {
+	//	return mPimpl->mMouseButtonUp;
+	//}
+
 	void Engine::Quit() {
 		mPimpl->mQuit = true;
 	}
@@ -248,9 +254,11 @@ namespace King {
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				mMouseButtonDown = true;
+				//mMouseButtonUp = false;
 				break;
 			case SDL_MOUSEBUTTONUP:
 				mMouseButtonDown = false;
+			//	mMouseButtonUp = true;
 				break;
 			case SDL_MOUSEMOTION:
 				mMouseX = static_cast<float>(event.motion.x);

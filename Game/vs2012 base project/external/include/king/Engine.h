@@ -26,6 +26,7 @@ namespace King {
 		float GetMouseX() const;
 		float GetMouseY() const;
 		bool GetMouseButtonDown() const;
+		bool GetMouseButtonUp() const;
 		
 		void Start(Updater& updater);
 		void Quit();

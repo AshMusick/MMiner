@@ -3,25 +3,71 @@
 #include "Partida.h"
 
 
-void Gemas::drawGemas(float x, float y, int c)
+Gema::Gema(float x, float y, int c)
 {
-	switch (c) 
+	this->coordy = y;
+	this->coordx = x;
+	this->color = c;
+	MaxAncho = this->coordx + ANCHO;
+	MaxAlto = this->coordy + ALTO;
+	showing = true;
+}
+
+Gema::~Gema()
+{
+}
+
+void Gema::Hide()
+{
+	if(this->showing)
+		this->showing = false;
+}
+
+//DETECTO CUANDO EL MOUSE ESTA DENTRO DEL AREA QUE OCUPO
+bool Gema::insideArea(float Cx, float Cy)
+{
+	return ((Cx > coordx) && (Cx < MaxAncho) && (Cy > coordy) && (Cy < MaxAlto));
+}
+
+void Gema::getCoords(float &x, float &y) {
+	x = this->coordx;
+	y = this->coordy;
+}
+
+void Gema::setCoords(float x, float y)
+{
+	this->coordx = x;
+	this->coordy = y;
+}
+
+void Gema::setColor(int c)
+{
+	this->color = c;
+}
+
+void Gema::drawGemas()
+{
+	King::Engine::Texture textura;
+
+	switch (this->color) 
 	{
 	case 0:
-		Partida::mEngine.Render(King::Engine::TEXTURE_GREEN, x, y);
+		textura = King::Engine::TEXTURE_GREEN;
 		break;
 	case 1:
-		Partida::mEngine.Render(King::Engine::TEXTURE_BLUE, x, y);
+		textura = King::Engine::TEXTURE_BLUE;
 		break;
 	case 2:
-		Partida::mEngine.Render(King::Engine::TEXTURE_RED, x, y);
+		textura = King::Engine::TEXTURE_RED;
 		break;
 	case 3:
-		Partida::mEngine.Render(King::Engine::TEXTURE_PURPLE, x, y);
+		textura = King::Engine::TEXTURE_PURPLE;
 		break;
 	case 4:
-		Partida::mEngine.Render(King::Engine::TEXTURE_YELLOW, x, y);
+		textura = King::Engine::TEXTURE_YELLOW;
 		break;
 	}
+	showing = true;
+	Partida::mEngine.Render(textura, this->coordx, this->coordy);
 }
 
