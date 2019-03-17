@@ -21,7 +21,7 @@ public:
 private:
 	
 	void swapGemas(Gema * origen, Gema * destino);
-	Gema * getGema(float x, float y);
+	Gema * getGema(float x, float y,bool esOrigen);
 
 	Gema* gemas[MAX_LINES][MAX_COLUMNS];
 	float boardX[MAX_COLUMNS] =			{ 325.0f , 370.0f , 415.0f , 460.0f , 505.0f , 550.0f , 595.0f , 640.0f };
@@ -33,5 +33,9 @@ private:
 	float LastPosMouseY;
 	int posX;
 	int posY;
+	int colOrigen;
+	int rengOrigen;
+	int colDest;
+	int rengDest;
 
 };

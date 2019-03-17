@@ -22,6 +22,7 @@ public:
 	void getCoords(float &x, float &y);
 	void setCoords(float, float);
 	void setColor(int);
+	int getColor() { return this->color; }
 	void drawGemas();
 	// Overload ~ operator
 	Gema operator * (const Gema &b) {

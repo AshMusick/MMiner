@@ -103,7 +103,7 @@ bool Tablero::checkBoard()
 	{
 		for (int i = 0; i < 6; i++)
 		{
-			if ((boardC[j][i] == boardC[j][i+1]) && (boardC[j][i] == boardC[j][i+2])) 
+			if ((gemas[j][i]->getColor() == gemas[j][i+1]->getColor()) && (gemas[j][i]->getColor() == gemas[j][i+2]->getColor()))
 			{
 				std::cout << __func__ << "Encontre MATCH horizontal !" << std::endl;
 				gemas[j][i]->Hide();
@@ -117,7 +117,7 @@ bool Tablero::checkBoard()
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			if ((boardC[j][i] == boardC[j+1][i]) && (boardC[j][i] == boardC[j+2][i]))
+			if ((gemas[j][i]->getColor() == gemas[j+1][i]->getColor()) && (gemas[j][i]->getColor() == gemas[j+2][i]->getColor()))
 			{
 				std::cout << __func__ <<"Encontre MATCH vertical !" << std::endl;
 				gemas[j][i]->Hide();
@@ -138,8 +138,8 @@ void Tablero::moveBoard(float inix, float iniy, float finx, float finy)
 		firstPosMouseY = iniy;
 		LastPosMouseX = finx;
 		LastPosMouseY = finy;
-		Gema *origen = getGema(firstPosMouseX, firstPosMouseY);
-		Gema *destino = getGema(LastPosMouseX, LastPosMouseY);
+		Gema *origen = getGema(firstPosMouseX, firstPosMouseY, true);
+		Gema *destino = getGema(LastPosMouseX, LastPosMouseY, false);
 
 		if ((origen != nullptr) && (destino != nullptr)) {
 
@@ -186,19 +186,32 @@ void Tablero::swapGemas(Gema * origen, Gema * destino) {
 		origen->getCoords(auxOX, auxOY);
 		destino->setCoords(auxOX, auxOY);
 		origen->setCoords(auxDX, auxDY);
+		Gema * aux = gemas[this->rengOrigen][this->colOrigen];
+		gemas[this->rengOrigen][this->colOrigen] = gemas[this->rengDest][this->colDest];
+		gemas[this->rengDest][this->colDest] = aux;
 	}
 	else
 		std::cout << __func__ << " No hago el swap, porque no son consecutivas" << std::endl;
 }
 
-Gema * Tablero::getGema(float x, float y)
+Gema * Tablero::getGema(float x, float y, bool esOrigen)
 {
 	for (int j = 0; j < 6; j++)
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			if (gemas[j][i]->insideArea(x, y))
+			if (gemas[j][i]->insideArea(x, y)) {
+				if (esOrigen) {
+					this->colOrigen = i;
+					this->rengOrigen = j;
+				}
+				else {
+					this->colDest = i;
+					this->rengDest = j;
+				}
+
 				return gemas[j][i];
+			}
 		}
 	}
 	return nullptr;
