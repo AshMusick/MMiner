@@ -1,8 +1,15 @@
-﻿  Tablero.cpp
-c:\users\camilina\documents\lucho\workspace\mminer\game\vs2012 base project\src\tablero.cpp(31): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+﻿  Engine.cpp
+  Font.cpp
+  GlContext.cpp
+  Sdl.cpp
+  SdlSurface.cpp
+  SdlWindow.cpp
+  Gemas.cpp
+  main.cpp
+  Partida.cpp
+  Tablero.cpp
+c:\users\camilina\documents\lucho\workspace\mminer\game\vs2012 base project\src\tablero.cpp(33): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Generating code
-  3 of 273 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  All 360 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   Worktest.vcxproj -> C:\Users\Camilina\Documents\Lucho\workspace\MMiner\Game\vs2012 base project\bin\Worktest.exe

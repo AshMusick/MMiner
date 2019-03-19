@@ -23,6 +23,12 @@ void Gema::Hide()
 		this->showing = false;
 }
 
+void Gema::Show()
+{
+	if (!this->showing)
+		this->showing = true;
+}
+
 //DETECTO CUANDO EL MOUSE ESTA DENTRO DEL AREA QUE OCUPO
 bool Gema::insideArea(float Cx, float Cy)
 {

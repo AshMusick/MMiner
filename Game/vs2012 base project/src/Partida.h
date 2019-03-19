@@ -2,7 +2,7 @@
 
 #include <king/Engine.h>
 #include <king/Updater.h>
-
+#include <time.h>
 #include "Tablero.h"
 
 
@@ -24,5 +24,8 @@ private:
 	bool secondClick;
 	bool gameFlag = false;
 	Tablero *tablero;
+	int Puntaje;
+	time_t TiempoInicio;
+	time_t TiempoActual;
 
 };

@@ -17,6 +17,7 @@ public:
 	Gema(float x, float y, int c);
 	~Gema();
 	void Hide();
+	void Show();
 	bool isShowing() { return this->showing; }
 	bool insideArea(float , float);
 	void getCoords(float &x, float &y);

@@ -4,14 +4,16 @@
 //#include "Gemas.h"
 
 #include <cstdlib>
+#include <random>
 #include <ctime>
 #include <Windows.h>
 #include <iostream>
 
 
-Tablero::Tablero()
+Tablero::Tablero(int punt)
 {
 	//aca tendria q cargar las coordenadas
+	Puntaje = punt;
 }
 
 Tablero::~Tablero()
@@ -70,14 +72,22 @@ void Tablero::createBoard()
 void Tablero::refillBoard()
 {
 	std::cout << __func__ <<  std::endl;
+
+	//alternative to rand()
+	std::random_device rd;
+	std::mt19937 mt(rd());
+	std::uniform_real_distribution<double> dist(1.0, 4.0);
+
 	//Llamado a Gemas para dibujar el tablero
 	for (int j = 0; j < 8; j++)
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			if (!gemas[j][i]->isShowing())
-
-				gemas[j][i]->setColor((0 + (rand() % 4)));
+			if (!gemas[j][i]->isShowing()) {
+				++Puntaje;
+				gemas[j][i]->setColor((int) dist(mt));
+				gemas[j][i]->Show();
+			}
 		}
 	}
 }
@@ -98,7 +108,10 @@ void Tablero::drawBoard()
 bool Tablero::checkBoard()
 {
 	std::cout << __func__ << std::endl;
+	
+	bool val = false;
 	//Chequeo sin modificacion
+
 	for (int j = 0; j < 8; j++)
 	{
 		for (int i = 0; i < 6; i++)
@@ -109,7 +122,7 @@ bool Tablero::checkBoard()
 				gemas[j][i]->Hide();
 				gemas[j][i+1]->Hide();
 				gemas[j][i+2]->Hide();
-				return true;
+				val = true;
 			}
 		}
 	}
@@ -123,11 +136,12 @@ bool Tablero::checkBoard()
 				gemas[j][i]->Hide();
 				gemas[j + 1][i]->Hide();
 				gemas[j + 2][i]->Hide();
-				return true;
+				val = true;	
 			}
 		}
 	}
-	return false;
+
+	return val;
 }
 
 void Tablero::moveBoard(float inix, float iniy, float finx, float finy)
@@ -144,7 +158,7 @@ void Tablero::moveBoard(float inix, float iniy, float finx, float finy)
 		if ((origen != nullptr) && (destino != nullptr)) {
 
 			swapGemas(origen, destino);
-			
+
 			//hay alguna ocurrencia??
 			if (checkBoard()) {
 				drawBoard();
@@ -152,6 +166,7 @@ void Tablero::moveBoard(float inix, float iniy, float finx, float finy)
 				//vuelvo a llenar las vacias
 				refillBoard();
 				drawBoard();
+				checkBoard();
 			}
 			else {
 				//vuelvo atras el movimiento

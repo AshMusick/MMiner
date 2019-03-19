@@ -9,12 +9,13 @@ class Tablero
 
 public:
 
-	Tablero();
+	Tablero(int Puntaje);
 	~Tablero();
 	void createBoard();
 	void refillBoard();
 	void moveBoard(float x, float y, float finx, float finy);
 	bool consecutivas(Gema * origen, Gema * destino);
+	int getPuntaje() { return this->Puntaje; }
 	void drawBoard();
 	bool checkBoard();
 
@@ -31,6 +32,7 @@ private:
 	float firstPosMouseY;
 	float LastPosMouseX;
 	float LastPosMouseY;
+	int Puntaje;
 	int posX;
 	int posY;
 	int colOrigen;

@@ -1,6 +1,7 @@
 
 #include <windows.h>
 #include <iostream>
+#include <string>
 #include "Partida.h"
 //#include "Tablero.h"
 
@@ -13,6 +14,7 @@ Partida::Partida()
 	coordIniY = 0.0;
 	coordFinX = 0.0;
 	coordFinY = 0.0;
+	Puntaje = 0;
 	bool secondClick = false;
 }
 
@@ -31,7 +33,8 @@ void Partida::Update()
 	//Creador de tablero
 	if (!gameFlag)
 	{
-		tablero = new Tablero();
+		tablero = new Tablero(Puntaje);
+		time(&this->TiempoInicio);
 		do{
 			tablero->createBoard();
 		} 
@@ -39,8 +42,22 @@ void Partida::Update()
 		gameFlag = true;
 	}
 	
+	//tiempo actual
+	time(&this->TiempoActual);
 	//Render
 	Partida::mEngine.Render(King::Engine::TEXTURE_BACKGROUND, 0.0f, 0.0f);
+	//Nombre del jugador
+	Partida::mEngine.Write("Jugador: Lucho", 350, 50.0f); 
+	//puntaje
+	this->Puntaje = tablero->getPuntaje();
+	string puntajeConcatenado = "Puntaje: " + std::to_string(this->Puntaje);
+	Partida::mEngine.Write(puntajeConcatenado.c_str(), 30.0f , 100.0f );
+	//tiempo
+	double seconds = difftime(this->TiempoActual, this->TiempoInicio);
+	string tiempoconcatenado = "Tiempo: " + std::to_string(seconds);
+	int indexDePunto = tiempoconcatenado.find(".");
+	Partida::mEngine.Write(tiempoconcatenado.substr(0, indexDePunto + 2).c_str(), 30.0f , 200.0f);
+
 	tablero->drawBoard();
 	
 	//Interaccion de usuario
@@ -55,7 +72,7 @@ void Partida::Update()
 				coordIniY = mEngine.GetMouseY();
 				std::cout << "click 1" << std::endl;
 				secondClick = true;
-				Sleep(500);
+				Sleep(100);
 			}
 			else {
 				//guardo coordenadas finales
@@ -64,7 +81,7 @@ void Partida::Update()
 				std::cout << "click 2" << std::endl;
 				tablero->moveBoard(coordIniX, coordIniY, coordFinX, coordFinY);
 				secondClick = false;
-				Sleep(500);
+				Sleep(100);
 			}
 		}
 	}
